@@ -5,6 +5,8 @@ import ImageHoster.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.regex.Pattern;
+
 @Service
 public class UserService {
 
@@ -32,6 +34,21 @@ public class UserService {
         } else {
             return null;
         }
+    }
+
+    /**
+     * validatePassword: Validate password as below
+     * at least 1 alphabet (a-z or A-Z), 1 number (0-9) and
+     * 1 special character (any character other than a-z, A-Z and 0-9)
+     *
+     * @author  Naga
+     * @version 1.0
+     */
+    public boolean validatePassword(User user) {
+        final String PATTERN =
+                "^(?=.{3,})((?=.*[a-z])|(?=.*[A-Z]))(?=.*[^\\w\\d]).*$";
+        Pattern.compile(PATTERN);
+        return user.getPassword().matches(PATTERN);
     }
 
 }
