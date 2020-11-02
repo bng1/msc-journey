@@ -17,6 +17,7 @@ public class HomeController {
 
     @RequestMapping("/")
     public String getAllImages(Model model) {
+        System.out.println("GOOO getAllImages Homecontroller");
         List<Image> images = imageService.getAllImages();
         model.addAttribute("images", images);
         return "index";

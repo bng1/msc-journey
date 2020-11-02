@@ -24,7 +24,7 @@ public class ImageRepository {
 
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
-
+        System.out.println("GOOO upload image");
         try {
             transaction.begin();
             em.persist(newImage);
@@ -39,6 +39,7 @@ public class ImageRepository {
     //Executes JPQL query to fetch all the images from the database
     //Returns the list of all the images fetched from the database
     public List<Image> getAllImages() {
+        System.out.println("GOOO all Image repository");
         EntityManager em = emf.createEntityManager();
         TypedQuery<Image> query = em.createQuery("SELECT i from Image i", Image.class);
         List<Image> resultList = query.getResultList();
@@ -51,6 +52,7 @@ public class ImageRepository {
     //Returns the image in case the image is found in the database
     //Returns null if no image is found in the database
     public Image getImageByTitle(String title) {
+        System.out.println("GOOO get Image by title");
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<Image> typedQuery = em.createQuery("SELECT i from Image i where i.title =:title", Image.class).setParameter("title", title);
@@ -64,6 +66,7 @@ public class ImageRepository {
     //Executes JPQL query to fetch the image from the database with corresponding id
     //Returns the image fetched from the database
     public Image getImage(Integer imageId) {
+        System.out.println("GOOO getImage imageRepo");
         EntityManager em = emf.createEntityManager();
         TypedQuery<Image> typedQuery = em.createQuery("SELECT i from Image i where i.id =:imageId", Image.class).setParameter("imageId", imageId);
         Image image = typedQuery.getSingleResult();
@@ -76,6 +79,7 @@ public class ImageRepository {
     //The transaction is committed if it is successful
     //The transaction is rolled back in case of unsuccessful transaction
     public void updateImage(Image updatedImage) {
+        System.out.println("GOOO update image");
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
 

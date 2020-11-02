@@ -21,6 +21,7 @@ public class UserRepository {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
 
+        System.out.println("GOOO register userRepository");
         try {
             transaction.begin();
             //persist() method changes the state of the model object from transient state to persistence state
@@ -38,6 +39,7 @@ public class UserRepository {
     //Returns the fetched user
     //Returns null in case of NoResultException
     public User checkUser(String username, String password) {
+        System.out.println("GOOO checkUser userRepo");
         try {
             EntityManager em = emf.createEntityManager();
             TypedQuery<User> typedQuery = em.createQuery("SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class);

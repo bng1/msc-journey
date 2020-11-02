@@ -30,6 +30,7 @@ public class UserController {
     //Adds User type object to a model and returns 'users/registration.html' file
     @RequestMapping("users/registration")
     public String registration(Model model) {
+        System.out.println("GOOO regitration UserController");
         User user = new User();
         UserProfile profile = new UserProfile();
         user.setProfile(profile);
@@ -41,6 +42,7 @@ public class UserController {
     //This method calls the business logic and after the user record is persisted in the database, directs to login page
     @RequestMapping(value = "users/registration", method = RequestMethod.POST)
     public String registerUser(User user) {
+        System.out.println("GOOO registerUser UserController");
         userService.registerUser(user);
         return "redirect:/users/login";
     }
@@ -48,6 +50,7 @@ public class UserController {
     //This controller method is called when the request pattern is of type 'users/login'
     @RequestMapping("users/login")
     public String login() {
+        System.out.println("GOOO login UserController");
         return "users/login";
     }
 
@@ -58,6 +61,7 @@ public class UserController {
     @RequestMapping(value = "users/login", method = RequestMethod.POST)
     public String loginUser(User user, HttpSession session) {
         User existingUser = userService.login(user);
+        System.out.println("GOOO login user UserController");
         if (existingUser != null) {
             session.setAttribute("loggeduser", existingUser);
             return "redirect:/images";
@@ -75,6 +79,7 @@ public class UserController {
     public String logout(Model model, HttpSession session) {
         session.invalidate();
 
+        System.out.println("GOOO logout UserController");
         List<Image> images = imageService.getAllImages();
         model.addAttribute("images", images);
         return "index";

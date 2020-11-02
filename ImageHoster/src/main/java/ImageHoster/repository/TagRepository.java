@@ -14,6 +14,7 @@ public class TagRepository {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
 
+        System.out.println("GOOO create tag tagRepo");
         try {
             transaction.begin();
             em.persist(tag);
@@ -25,6 +26,7 @@ public class TagRepository {
     }
 
     public Tag findTag(String tagName) {
+        System.out.println("GOOO find tag TagRepo");
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<Tag> typedQuery = em.createQuery("SELECT t from Tag t where t.name =:tagName", Tag.class).setParameter("tagName", tagName);
