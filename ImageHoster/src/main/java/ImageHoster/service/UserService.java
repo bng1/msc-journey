@@ -13,6 +13,7 @@ public class UserService {
 
     //Call the registerUser() method in the UserRepository class to persist the user record in the database
     public void registerUser(User newUser) {
+        System.out.println("GOOOOO registerUser userService");
         userRepository.registerUser(newUser);
     }
 
@@ -24,6 +25,7 @@ public class UserService {
     //The Repository returns User type object if user with entered username and password exists in the database
     //Else returns null
     public User login(User user) {
+        System.out.println("GOOOO login userService");
         User existingUser = userRepository.checkUser(user.getUsername(), user.getPassword());
         if (existingUser != null) {
             return existingUser;

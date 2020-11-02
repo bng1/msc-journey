@@ -12,10 +12,12 @@ public class TagService {
     private TagRepository tagRepository;
 
     public Tag getTagByName(String title) {
+        System.out.println("GOOOOO gettabbyname tagService");
         return tagRepository.findTag(title);
     }
 
     public Tag createTag(Tag tag) {
+        System.out.println("GOOOOO createTag tagService");
         return tagRepository.createTag(tag);
     }
 }

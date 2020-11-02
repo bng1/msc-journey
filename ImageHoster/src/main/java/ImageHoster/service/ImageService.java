@@ -16,6 +16,7 @@ public class ImageService {
 
     //Call the getAllImages() method in the Repository and obtain a List of all the images in the database
     public List<Image> getAllImages() {
+        System.out.println("GOOO getAllImages image service");
         return imageRepository.getAllImages();
     }
 
@@ -33,6 +34,7 @@ public class ImageService {
 
     //The method calls the getImage() method in the Repository and passes the id of the image to be fetched
     public Image getImage(Integer imageId) {
+        System.out.println("GOOOOO getimage imageService" + imageId);
         return imageRepository.getImage(imageId);
     }
 
