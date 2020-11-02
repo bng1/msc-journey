@@ -1,5 +1,6 @@
 package ImageHoster.controller;
 
+import ImageHoster.model.Comment;
 import ImageHoster.model.Image;
 import ImageHoster.model.Tag;
 import ImageHoster.model.User;
@@ -51,7 +52,21 @@ public class ImageController {
         Image image = imageService.getImage(id);
         model.addAttribute("image", image);
         model.addAttribute("tags", image.getTags());
+        model.addAttribute("comments", image.getComments());
+
         return "images/image";
+    }
+
+    @RequestMapping(value = "/image/{imageId}/{imageTitle}/comments", method = RequestMethod.POST)
+    public String addImageComment(@PathVariable("imageId") Integer id, @PathVariable("imageTitle") String title, Model model, HttpSession session) throws IOException {
+        System.out.println("GOOOOO addImageComment >>>>>>>>>>>>" + id + "  >>" + title);
+        Image image = imageService.getImage(id);
+        User user = (User) session.getAttribute("loggeduser");
+
+        System.out.println(" User: >>>>>>>>>>>>>> + " + user.getUsername());
+        //image.setComment();
+
+        return "redirect:/images/{imageId}/{imageTitle}";
     }
 
     //This controller method is called when the request pattern is of type 'images/upload'
@@ -129,6 +144,7 @@ public class ImageController {
         Image image = imageService.getImage(imageId);
         String updatedImageData = convertUploadedFileToBase64(file);
         List<Tag> imageTags = findOrCreateTags(tags);
+        //TODO: comments
         if (updatedImageData.isEmpty())
             updatedImage.setImageFile(image.getImageFile());
         else {
