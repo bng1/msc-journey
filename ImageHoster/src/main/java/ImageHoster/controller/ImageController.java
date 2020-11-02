@@ -147,7 +147,6 @@ public class ImageController {
     /*@RequestMapping(value = "/deleteImage", method = RequestMethod.DELETE) */
     @RequestMapping(value = "/deleteImage", method = {RequestMethod.DELETE, RequestMethod.POST})
     public String deleteImageSubmit(@RequestParam(name = "imageId") Integer imageId) {
-        System.out.println("GOOO delete image ImageController");
         imageService.deleteImage(imageId);
         return "redirect:/images";
     }
