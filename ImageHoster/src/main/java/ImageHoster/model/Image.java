@@ -51,6 +51,9 @@ public class Image {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Tag> tags = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
+
     public Image() {
     }
 
@@ -68,8 +71,6 @@ public class Image {
         this.description = description;
         this.date = date;
     }
-
-
 
     public Integer getId() {
         return id;
@@ -126,7 +127,16 @@ public class Image {
         return tags;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
 }
