@@ -111,10 +111,13 @@ public class Image {
         this.date = date;
     }
 
-    public User getUser() {
-        return user;
+    public User getUser(User user) {
+        return this.user;
     }
 
+    public User getUser() {
+        return this.user;
+    }
     public void setUser(User user) {
         this.user = user;
     }
