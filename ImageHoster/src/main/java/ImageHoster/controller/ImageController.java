@@ -107,7 +107,6 @@ public class ImageController {
         Image image = imageService.getImage(imageId);
         User user = (User) session.getAttribute("loggeduser");
 
-        String tags = convertTagsToString(image.getTags());
         model.addAttribute("image", image);
         model.addAttribute("tags", image.getTags());
         List<Comment> cl = commentService.getCommentsById(image.getId());
@@ -173,7 +172,7 @@ public class ImageController {
             List<Comment> cl = commentService.getCommentsById(image.getId());
             image.setComments(cl);
             model.addAttribute("comments", image.getComments());
-            model.addAttribute("deleteError", "Only the owner of the image can edit the image");
+            model.addAttribute("deleteError", "Only the owner of the image can delete the image");
             return "images/image";
         } else {
             imageService.deleteImage(imageId);
