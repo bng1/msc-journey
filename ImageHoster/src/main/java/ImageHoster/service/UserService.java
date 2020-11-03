@@ -46,7 +46,9 @@ public class UserService {
      */
     public boolean validatePassword(User user) {
         final String PATTERN =
-                "^(?=.{3,})((?=.*[a-z])|(?=.*[A-Z]))(?=.*[^\\w\\d]).*$";
+                //"^(?=.{3,})((?=.*[a-z])|(?=.*[A-Z]))(?=.*[^\\w\\d]).*$";
+        "^(?=.*\\d)((?=.*[a-z])|(?=.*[A-Z]))(?=.*[^\\w\\d]).*$";
+        System.out.println("GOOOO Paasword : " + user.getPassword());
         Pattern.compile(PATTERN);
         return user.getPassword().matches(PATTERN);
     }
