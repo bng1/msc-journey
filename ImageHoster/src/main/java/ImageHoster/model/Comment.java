@@ -28,4 +28,40 @@ public class Comment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "image_id")
     private Image image;
+
+    public Comment() {
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public LocalDate getCreatedDate() {
+        return createdDate;
+    }
+
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setCreatedDate(LocalDate createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

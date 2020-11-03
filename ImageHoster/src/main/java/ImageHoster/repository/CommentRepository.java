@@ -5,6 +5,7 @@ import ImageHoster.model.Tag;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Repository
 public class CommentRepository {
@@ -32,6 +33,18 @@ public class CommentRepository {
         try {
             TypedQuery<Comment> typedQuery = em.createQuery("SELECT t from Comment t where t.id =:comment.id", Comment.class);
             return typedQuery.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    public List<Comment> findCommentsById(Integer id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Comment> query = em.createQuery("SELECT p from Comment p", Comment.class);
+            List<Comment> resultList = query.getResultList();
+
+            return resultList;
         } catch (NoResultException nre) {
             return null;
         }

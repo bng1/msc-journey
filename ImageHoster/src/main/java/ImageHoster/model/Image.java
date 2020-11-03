@@ -138,5 +138,4 @@ public class Image {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
-
 }

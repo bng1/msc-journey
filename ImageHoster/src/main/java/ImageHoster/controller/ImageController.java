@@ -4,6 +4,7 @@ import ImageHoster.model.Comment;
 import ImageHoster.model.Image;
 import ImageHoster.model.Tag;
 import ImageHoster.model.User;
+import ImageHoster.service.CommentService;
 import ImageHoster.service.ImageService;
 import ImageHoster.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class ImageController {
     @Autowired
     private TagService tagService;
 
+    @Autowired
+    private CommentService commentService;
+
     //This method displays all the images in the user home page after successful login
     @RequestMapping("images")
     public String getUserImages(Model model) {
@@ -48,25 +52,15 @@ public class ImageController {
     //this list is then sent to 'images/image.html' file and the tags are displayed
     @RequestMapping("/images/{id}/{title}")
     public String showImage(@PathVariable("id") Integer id, @PathVariable("title") String title, Model model) {
-        System.out.println("GOOOOO showimage ImageController " + id);
         Image image = imageService.getImage(id);
         model.addAttribute("image", image);
         model.addAttribute("tags", image.getTags());
+
+        List<Comment> cl = commentService.getCommentsById(image.getId());
+        image.setComments(cl);
+
         model.addAttribute("comments", image.getComments());
-
         return "images/image";
-    }
-
-    @RequestMapping(value = "/image/{imageId}/{imageTitle}/comments", method = RequestMethod.POST)
-    public String addImageComment(@PathVariable("imageId") Integer id, @PathVariable("imageTitle") String title, Model model, HttpSession session) throws IOException {
-        System.out.println("GOOOOO addImageComment >>>>>>>>>>>>" + id + "  >>" + title);
-        Image image = imageService.getImage(id);
-        User user = (User) session.getAttribute("loggeduser");
-
-        System.out.println(" User: >>>>>>>>>>>>>> + " + user.getUsername());
-        //image.setComment();
-
-        return "redirect:/images/{imageId}/{imageTitle}";
     }
 
     //This controller method is called when the request pattern is of type 'images/upload'
@@ -113,14 +107,14 @@ public class ImageController {
         Image image = imageService.getImage(imageId);
         User user = (User) session.getAttribute("loggeduser");
 
-        System.out.println("editImage ImageController + " + image.getUser().getId());
-        System.out.println("logged user : " + user.getId());
-
         String tags = convertTagsToString(image.getTags());
         model.addAttribute("image", image);
-        model.addAttribute("tags", tags);
+        model.addAttribute("tags", image.getTags());
+        List<Comment> cl = commentService.getCommentsById(image.getId());
+        image.setComments(cl);
+        model.addAttribute("comments", image.getComments());
         if (image.getUser().getId() != user.getId()) {
-            model.addAttribute("editError", 1);
+            model.addAttribute("editError", "Only the owner of the image can edit the image");
             return "images/image";
         } else {
             return "images/edit";
@@ -144,7 +138,6 @@ public class ImageController {
         Image image = imageService.getImage(imageId);
         String updatedImageData = convertUploadedFileToBase64(file);
         List<Tag> imageTags = findOrCreateTags(tags);
-        //TODO: comments
         if (updatedImageData.isEmpty())
             updatedImage.setImageFile(image.getImageFile());
         else {
@@ -158,7 +151,6 @@ public class ImageController {
         updatedImage.setDate(new Date());
 
         imageService.updateImage(updatedImage);
-        System.out.println("GOOO edit image submit ImageController " + updatedImage.getTitle() + " id: " + updatedImage.getId());
         return "redirect:/images/" + updatedImage.getId() + "/" + updatedImage.getTitle();
     }
 
@@ -175,12 +167,13 @@ public class ImageController {
         System.out.println("deleteImageSubmit ImageController + " + image.getUser().getId());
         System.out.println("logged user : " + user.getId());
 
-        String tags = convertTagsToString(image.getTags());
-
         if (image.getUser().getId() != user.getId()) {
             model.addAttribute("image", image);
-            model.addAttribute("tags", tags);
-            model.addAttribute("deleteError", 1);
+            model.addAttribute("tags", image.getTags());
+            List<Comment> cl = commentService.getCommentsById(image.getId());
+            image.setComments(cl);
+            model.addAttribute("comments", image.getComments());
+            model.addAttribute("deleteError", "Only the owner of the image can edit the image");
             return "images/image";
         } else {
             imageService.deleteImage(imageId);
