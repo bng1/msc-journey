@@ -1,4 +1,3 @@
-/*
 package ImageHoster.controller;
 
 
@@ -39,12 +38,12 @@ public class CommentControllerTest {
     public void createComment() throws Exception {
         User user = new User();
         UserProfile userProfile = new UserProfile();
-        userProfile.setId(1);
+        userProfile.setId(123);
         userProfile.setEmailAddress("a@gmail.com");
         userProfile.setFullName("Abhi Mahajan");
         userProfile.setMobileNumber("9876543210");
         user.setProfile(userProfile);
-        user.setId(1);
+        user.setId(123);
         user.setUsername("Abhi");
         user.setPassword("password1@");
 
@@ -53,16 +52,15 @@ public class CommentControllerTest {
 
 
         Image image = new Image();
-        image.setId(1);
+        image.setId(123);
         image.setTitle("new");
         image.setDescription("This image is for testing purpose");
 
         Mockito.when(imageService.getImage(Mockito.anyInt())).thenReturn(image);
 
-        this.mockMvc.perform(post("/image/1/new/comments")
+        this.mockMvc.perform(post("/image/123/new/comments")
                 .param("comment", "This comment is for testing purpose")
                 .session(session))
-                .andExpect(redirectedUrl("/images/1/new"));
+                .andExpect(redirectedUrl("/images/123/new"));
     }
 }
-*/

@@ -14,12 +14,10 @@ public class CommentService {
     private CommentRepository commentRepository;
 
     public Comment createComment(Comment comment) {
-        System.out.println("GOOOOO createTag tagService");
         return commentRepository.createComment(comment);
     }
 
     public Comment getComment(Comment comment) {
-        System.out.println("GOOOOO gettabbyname tagService");
         return commentRepository.findComment(comment);
     }
 

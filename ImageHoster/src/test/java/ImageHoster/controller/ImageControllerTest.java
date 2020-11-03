@@ -1,4 +1,4 @@
-/*
+
 package ImageHoster.controller;
 
 import ImageHoster.model.Image;
@@ -7,6 +7,7 @@ import ImageHoster.model.User;
 import ImageHoster.model.UserProfile;
 import ImageHoster.service.ImageService;
 import ImageHoster.service.TagService;
+import ImageHoster.service.CommentService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -39,6 +40,9 @@ public class ImageControllerTest {
 
     @MockBean
     private TagService tagService;
+
+    @MockBean
+    private CommentService commentService;
 
     //This test checks the controller logic to get all the images after the user is logged in the application and checks whether the logic returns the html file 'images.html'
     @Test
@@ -75,20 +79,20 @@ public class ImageControllerTest {
         user.setProfile(userProfile);
         user.setId(1);
         user.setUsername("Abhi");
-        user.setPassword("password1@");
+        user.setPassword("pAssword1@");
 
         session = new MockHttpSession();
         session.setAttribute("loggeduser", user);
 
         Image image = new Image();
-        image.setId(1);
+        image.setId(123);
         image.setTitle("new");
         image.setDescription("This image is for testing purpose");
         image.setUser(user);
 
         Mockito.when(imageService.getImage(Mockito.anyInt())).thenReturn(image);
 
-        this.mockMvc.perform(get("/images/1/new").session(session))
+        this.mockMvc.perform(get("/images/123/new").session(session))
                 .andExpect(view().name("images/image"))
                 .andExpect(content().string(containsString("Welcome User. This is the image")));
 
@@ -105,9 +109,9 @@ public class ImageControllerTest {
         userProfile.setFullName("Abhi Mahajan");
         userProfile.setMobileNumber("9876543210");
         user.setProfile(userProfile);
-        user.setId(1);
+        user.setId(134);
         user.setUsername("Abhi");
-        user.setPassword("password1@");
+        user.setPassword("paSsword1@");
 
         session = new MockHttpSession();
         session.setAttribute("loggeduser", user);
@@ -123,14 +127,14 @@ public class ImageControllerTest {
     public void uploadImageWithPostRequest() throws Exception {
         User user = new User();
         UserProfile userProfile = new UserProfile();
-        userProfile.setId(1);
+        userProfile.setId(123);
         userProfile.setEmailAddress("a@gmail.com");
         userProfile.setFullName("Abhi Mahajan");
         userProfile.setMobileNumber("9876543210");
         user.setProfile(userProfile);
-        user.setId(1);
+        user.setId(123);
         user.setUsername("Abhi");
-        user.setPassword("password1@");
+        user.setPassword("pasSword1@");
 
         session = new MockHttpSession();
         session.setAttribute("loggeduser", user);
@@ -155,14 +159,14 @@ public class ImageControllerTest {
     public void editImageWithOwnerOfTheImage() throws Exception {
         User user = new User();
         UserProfile userProfile = new UserProfile();
-        userProfile.setId(1);
+        userProfile.setId(123);
         userProfile.setEmailAddress("a@gmail.com");
         userProfile.setFullName("Abhi Mahajan");
         userProfile.setMobileNumber("9876543210");
         user.setProfile(userProfile);
-        user.setId(1);
+        user.setId(123);
         user.setUsername("Abhi");
-        user.setPassword("password1@");
+        user.setPassword("passWord1@");
 
         session = new MockHttpSession();
         session.setAttribute("loggeduser", user);
@@ -184,7 +188,7 @@ public class ImageControllerTest {
         Mockito.when(imageService.getImage(Mockito.anyInt())).thenReturn(image);
 
         this.mockMvc.perform(get("/editImage")
-                .param("imageId", "1")
+                .param("imageId", "123")
                 .session(session))
                 .andExpect(view().name("images/edit"))
                 .andExpect(content().string(containsString("Edit Image")));
@@ -239,12 +243,12 @@ public class ImageControllerTest {
     public void deleteImageWithOwnerOfTheImage() throws Exception {
         User user = new User();
         UserProfile userProfile = new UserProfile();
-        userProfile.setId(1);
+        userProfile.setId(123);
         userProfile.setEmailAddress("a@gmail.com");
         userProfile.setFullName("Abhi Mahajan");
         userProfile.setMobileNumber("9876543210");
         user.setProfile(userProfile);
-        user.setId(1);
+        user.setId(123);
         user.setUsername("Abhi");
         user.setPassword("password1@");
 
@@ -252,7 +256,7 @@ public class ImageControllerTest {
         session.setAttribute("loggeduser", user);
 
         Image image = new Image();
-        image.setId(1);
+        image.setId(111);
         image.setTitle("new");
         image.setDescription("This image is for testing purpose");
         image.setUser(user);
@@ -278,7 +282,7 @@ public class ImageControllerTest {
         user.setProfile(userProfile);
         user.setId(1);
         user.setUsername("Abhi");
-        user.setPassword("password1@");
+        user.setPassword("pAssword1@");
 
         session = new MockHttpSession();
         session.setAttribute("loggeduser", user);
@@ -292,7 +296,7 @@ public class ImageControllerTest {
         user.setProfile(userProfile1);
         user.setId(2);
         user.setUsername("Prerna");
-        user.setPassword("password1@@");
+        user.setPassword("pAssword1@@");
 
         Image image = new Image();
         image.setId(1);
@@ -310,4 +314,4 @@ public class ImageControllerTest {
     }
 }
 
-*/
+
